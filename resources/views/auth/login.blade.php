@@ -28,7 +28,7 @@
                     Email Address
                 </label>
                 <input type="email" name="email" value="{{ old('email') }}"
-                       placeholder="Enter your email" required autofocus
+                       placeholder="Enter email" required autofocus
                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 bg-slate-50 transition-all duration-150 {{ $errors->has('email') ? 'border-red-400 bg-red-50' : '' }}">
                 @error('email')<p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>@enderror
             </div>
@@ -38,7 +38,7 @@
                     Password
                 </label>
                 <input type="password" name="password"
-                       placeholder="Enter your password" required
+                       placeholder="Enter password" required
                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 bg-slate-50 transition-all duration-150 {{ $errors->has('password') ? 'border-red-400 bg-red-50' : '' }}">
                 @error('password')<p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>@enderror
             </div>
