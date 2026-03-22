@@ -33,7 +33,7 @@
 
 {{-- Info card --}}
 <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
-    <h3 class="text-base font-semibold text-slate-800 mb-3">Welcome to Hotel Billing System</h3>
+    <h3 class="text-base font-semibold text-slate-800 mb-3">Welcome to BillifyStay</h3>
     <p class="text-slate-500 text-sm leading-relaxed max-w-2xl">
         Manage your customers, rooms, restaurant menu, and room services all in one place.
         Use the sidebar to navigate between sections. When ready, head to Billing to generate

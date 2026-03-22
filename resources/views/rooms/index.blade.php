@@ -18,9 +18,12 @@
     <table class="w-full border-collapse">
         <thead>
             <tr class="border-b border-slate-100">
-                @foreach(['Room #','Floor','Description','Capacity','Price / Day','Actions'] as $h)
-                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{{ $h }}</th>
-                @endforeach
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Room #</th>
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Floor</th>
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Description</th>
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Capacity</th>
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Price / Day</th>
+                <th class="px-5 py-3.5 text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
@@ -60,18 +63,88 @@
     </table>
 </div>
 
-{{-- ── Add Modal ── --}}
-<div id="addModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+{{-- ── ADD MODAL ── --}}
+<div id="addModal"
+     class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
      onclick="if(event.target===this)closeModal('addModal')">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-7">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-base font-semibold text-slate-800">Add Room</h3>
-            <button onclick="closeModal('addModal')" class="text-slate-400 hover:text-slate-600 transition-colors">
+            <button onclick="closeModal('addModal')"
+                    class="text-slate-400 hover:text-slate-600 transition-colors">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
         <form action="{{ route('rooms.store') }}" method="POST">
             @csrf
+
+            {{-- Row 1: Room Number + Floor --}}
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Room Number <span class="text-red-400">*</span>
+                    </label>
+                    <input type="text" name="room_number"
+                           value="{{ old('room_number') }}"
+                           required placeholder="101"
+                           class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+                    @error('room_number')
+                        <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Floor Number <span class="text-slate-400 normal-case font-normal">(optional)</span>
+                    </label>
+                    <input type="number" name="floor"
+                           value="{{ old('floor') }}"
+                           placeholder="1" min="0"
+                           class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+                </div>
+            </div>
+
+            {{-- Row 2: Description --}}
+            <div class="mb-4">
+                <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                    Room Description <span class="text-red-400">*</span>
+                </label>
+                <input type="text" name="description"
+                       value="{{ old('description') }}"
+                       required placeholder="e.g. AC Deluxe, Family Friendly, Suite..."
+                       class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+                @error('description')
+                    <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Row 3: Capacity + Price --}}
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Capacity (persons) <span class="text-red-400">*</span>
+                    </label>
+                    <input type="number" name="capacity"
+                           value="{{ old('capacity', 2) }}"
+                           required min="1"
+                           class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+                    @error('capacity')
+                        <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Price per Day (₹) <span class="text-red-400">*</span>
+                    </label>
+                    <input type="number" name="price_per_day"
+                           value="{{ old('price_per_day') }}"
+                           required min="0" step="0.01" placeholder="2500"
+                           class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+                    @error('price_per_day')
+                        <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
             <div class="flex justify-end gap-3 mt-6 pt-5 border-t border-slate-100">
                 <button type="button" onclick="closeModal('addModal')"
                         class="border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium px-4 py-2 rounded-xl transition-colors">
@@ -86,13 +159,15 @@
     </div>
 </div>
 
-{{-- ── Edit Modal ── --}}
-<div id="editModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
+{{-- ── EDIT MODAL ── --}}
+<div id="editModal"
+     class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"
      onclick="if(event.target===this)closeModal('editModal')">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-7">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-base font-semibold text-slate-800">Edit Room</h3>
-            <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-600 transition-colors">
+            <button onclick="closeModal('editModal')"
+                    class="text-slate-400 hover:text-slate-600 transition-colors">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
@@ -100,29 +175,39 @@
             @csrf @method('PUT')
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Room Number <span class="text-red-400">*</span></label>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Room Number <span class="text-red-400">*</span>
+                    </label>
                     <input type="text" name="room_number" id="edit_room_number" required
                            class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Floor (optional)</label>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Floor Number (optional)
+                    </label>
                     <input type="number" name="floor" id="edit_floor" min="0"
                            class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
                 </div>
             </div>
             <div class="mb-4">
-                <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Description <span class="text-red-400">*</span></label>
+                <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                    Room Description <span class="text-red-400">*</span>
+                </label>
                 <input type="text" name="description" id="edit_description" required
                        class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Capacity <span class="text-red-400">*</span></label>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Capacity <span class="text-red-400">*</span>
+                    </label>
                     <input type="number" name="capacity" id="edit_capacity" min="1" required
                            class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Price / Day (₹) <span class="text-red-400">*</span></label>
+                    <label class="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+                        Price / Day (₹) <span class="text-red-400">*</span>
+                    </label>
                     <input type="number" name="price_per_day" id="edit_price" min="0" step="0.01" required
                            class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
                 </div>
@@ -141,22 +226,27 @@
     </div>
 </div>
 
-@if($errors->any() || old('room_number'))
-<script>document.addEventListener('DOMContentLoaded',()=>openModal('addModal'));</script>
-@endif
 @endsection
 
 @push('scripts')
 <script>
-function openModal(id)  { const m=document.getElementById(id); m.classList.remove('hidden'); m.classList.add('flex'); }
-function closeModal(id) { const m=document.getElementById(id); m.classList.add('hidden'); m.classList.remove('flex'); }
-function openEdit(id,num,floor,desc,cap,price) {
-    document.getElementById('editForm').action='/rooms/'+id;
-    document.getElementById('edit_room_number').value=num;
-    document.getElementById('edit_floor').value=floor;
-    document.getElementById('edit_description').value=desc;
-    document.getElementById('edit_capacity').value=cap;
-    document.getElementById('edit_price').value=price;
+function openModal(id) {
+    const m = document.getElementById(id);
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+}
+function closeModal(id) {
+    const m = document.getElementById(id);
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+}
+function openEdit(id, num, floor, desc, cap, price) {
+    document.getElementById('editForm').action = '/rooms/' + id;
+    document.getElementById('edit_room_number').value = num;
+    document.getElementById('edit_floor').value = floor;
+    document.getElementById('edit_description').value = desc;
+    document.getElementById('edit_capacity').value = cap;
+    document.getElementById('edit_price').value = price;
     openModal('editModal');
 }
 </script>

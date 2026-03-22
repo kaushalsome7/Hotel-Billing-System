@@ -6,7 +6,7 @@
         <input type="text" name="room_number"
                value="{{ old('room_number') }}"
                required placeholder="101"
-               class="w-full border {{ $errors->has('room_number') ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50' }} rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+               class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
         @error('room_number')
             <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
         @enderror
@@ -29,7 +29,7 @@
     <input type="text" name="description"
            value="{{ old('description') }}"
            required placeholder="e.g. AC Deluxe, Family Friendly, Suite..."
-           class="w-full border {{ $errors->has('description') ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50' }} rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+           class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
     @error('description')
         <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
     @enderror
@@ -43,7 +43,7 @@
         <input type="number" name="capacity"
                value="{{ old('capacity', 2) }}"
                required min="1"
-               class="w-full border {{ $errors->has('capacity') ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50' }} rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+               class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
         @error('capacity')
             <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
         @enderror
@@ -54,8 +54,9 @@
         </label>
         <input type="number" name="price_per_day"
                value="{{ old('price_per_day') }}"
-               required min="0" step="0.01" placeholder="2500"
-               class="w-full border {{ $errors->has('price_per_day') ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50' }} rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
+               required min="0" step="0.01"
+               placeholder="2500"
+               class="w-full border border-slate-200 bg-slate-50 rounded-xl px-4 py-2.5 text-sm text-slate-800 transition-all">
         @error('price_per_day')
             <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
         @enderror
