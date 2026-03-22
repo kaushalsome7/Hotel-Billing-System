@@ -45,7 +45,7 @@
 <aside class="w-64 bg-sidebar flex flex-col fixed inset-y-0 left-0 z-50 overflow-y-auto">
     <div class="px-6 py-7 border-b border-white/5 flex shrink-0">
         <h1 class="text-gold text-xl font-bold tracking-wide" style="font-family:'Playfair Display',serif">BillifyStay</h1>
-        <span class="text-white/30 text-[10px] tracking-widest uppercase mt-1 block font-light">Billing Management</span>
+        <span class="text-white/30 text-[10px] tracking-widest uppercase mt-1 block font-light"><br>v1.0</span>
     </div>
 
     <nav class="flex-1 px-3 py-4 space-y-0.5">
@@ -87,7 +87,7 @@
         </form>
     </div>
     <div class="px-6 py-3 border-t border-white/5 flex shrink-0">
-        <p class="text-white/15 text-[10px] tracking-wider">Hotel Billing System v1.0</p>
+        <p class="text-white/15 text-[10px] tracking-wider">BillifyStay v1.0</p>
     </div>
 </aside>
 

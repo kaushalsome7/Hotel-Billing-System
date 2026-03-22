@@ -72,7 +72,6 @@
         </div>
         <form action="{{ route('rooms.store') }}" method="POST">
             @csrf
-            @include('rooms._form')
             <div class="flex justify-end gap-3 mt-6 pt-5 border-t border-slate-100">
                 <button type="button" onclick="closeModal('addModal')"
                         class="border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium px-4 py-2 rounded-xl transition-colors">
